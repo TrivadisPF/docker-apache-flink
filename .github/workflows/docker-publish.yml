@@ -12,6 +12,7 @@ on:
 env:
   IMAGE_NAME: ghcr.io/${{ github.repository_owner }}/docker-apache-flink
   FLINK_VERSION: "1.20.5"
+  FLINK_TAG: "1.20.5-scala_2.12-java17"
   CONFLUENT_VERSION: "8.3.0"
 
 jobs:
@@ -48,6 +49,7 @@ jobs:
             type=ref,event=tag
             type=sha
             type=raw,value=latest,enable={{is_default_branch}}
+            type=raw,value=${{ env.FLINK_TAG }}
 
       - name: Build and push multi-arch image
         uses: docker/build-push-action@v6
@@ -60,4 +62,5 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
             FLINK_VERSION=${{ env.FLINK_VERSION }}
+            FLINK_TAG=${{ env.FLINK_TAG }}
             CONFLUENT_VERSION=${{ env.CONFLUENT_VERSION }}
