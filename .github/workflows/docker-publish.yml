@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 env:
-  IMAGE_NAME: ghcr.io/${{ github.repository_owner }}/docker-apache-flink
+  IMAGE_NAME: ghcr.io/${{ github.repository_owner }}/flink
   FLINK_VERSION: "1.20.5"
   FLINK_TAG: "1.20.5-scala_2.12-java17"
   CONFLUENT_VERSION: "8.3.0"
