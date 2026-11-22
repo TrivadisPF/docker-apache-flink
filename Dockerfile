@@ -1,6 +1,6 @@
-ARG FLINK_VERSION=2.3.0
+ARG FLINK_VERSION=2.2.1
 ARG FLINK_TAG=${FLINK_VERSION}-java17
-ARG CONFLUENT_VERSION=8.3.0
+ARG CONFLUENT_VERSION=8.4.1
 FROM flink:${FLINK_TAG}
 
 ARG FLINK_VERSION
@@ -43,7 +43,7 @@ RUN wget -P /opt/flink/lib https://packages.confluent.io/maven/io/confluent/comm
 #    wget -P /opt/flink/lib/hive https://repo1.maven.org/maven2/org/apache/flink/flink-sql-connector-hive-3.1.3_2.12/${FLINK_VERSION}/flink-sql-connector-hive-3.1.3_2.12-${FLINK_VERSION}.jar
 
 # Iceberg connector (runtime jar is built per Flink minor version)
-RUN wget -P /opt/flink/lib https://repo1.maven.org/maven2/org/apache/iceberg/iceberg-flink-runtime-2.3/1.12.0/iceberg-flink-runtime-2.3-1.12.0.jar
+RUN wget -P /opt/flink/lib https://repo1.maven.org/maven2/org/apache/iceberg/iceberg-flink-runtime-2.2/1.12.0/iceberg-flink-runtime-2.2-1.12.0.jar
 
 # AWS connector dependencies
 RUN mkdir -p /opt/flink/lib/aws && \
