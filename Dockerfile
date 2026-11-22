@@ -1,5 +1,5 @@
-ARG FLINK_VERSION=1.20.5
-ARG FLINK_TAG=${FLINK_VERSION}-scala_2.12-java17
+ARG FLINK_VERSION=2.3.0
+ARG FLINK_TAG=${FLINK_VERSION}-java17
 ARG CONFLUENT_VERSION=8.3.0
 FROM flink:${FLINK_TAG}
 
@@ -22,8 +22,8 @@ RUN mkdir -p /opt/flink/lib
 # Kafka connector
 # flink-xxxx is for the DataStream API - flink-sql-xxxx is for the Table API & Flink SQL
 #RUN wget -P /opt/flink/lib https://repo.maven.apache.org/maven2/org/apache/flink/flink-connector-kafka/3.4.0-1.20/flink-connector-kafka-3.4.0-1.20.jar
-RUN wget -P /opt/flink/lib https://repo.maven.apache.org/maven2/org/apache/flink/flink-sql-connector-kafka/3.4.0-1.20/flink-sql-connector-kafka-3.4.0-1.20.jar
-RUN wget -P /opt/flink/lib https://repo.maven.apache.org/maven2/org/apache/kafka/kafka-clients/3.8.0/kafka-clients-3.8.0.jar
+RUN wget -P /opt/flink/lib https://repo.maven.apache.org/maven2/org/apache/flink/flink-sql-connector-kafka/5.0.0-2.2/flink-sql-connector-kafka-5.0.0-2.2.jar
+RUN wget -P /opt/flink/lib https://repo.maven.apache.org/maven2/org/apache/kafka/kafka-clients/4.2.0/kafka-clients-4.2.0.jar
 
 # Avro and Schema Registry support
 # flink-xxxx is for the DataStream API - flink-sql-xxxx is for the Table API & Flink SQL
@@ -35,8 +35,12 @@ RUN wget -P /opt/flink/lib https://packages.confluent.io/maven/io/confluent/kafk
 RUN wget -P /opt/flink/lib https://packages.confluent.io/maven/io/confluent/common-utils/${CONFLUENT_VERSION}/common-utils-${CONFLUENT_VERSION}.jar
 
 # Hive connector
-RUN mkdir -p /opt/flink/lib/hive && \
-    wget -P /opt/flink/lib/hive https://repo1.maven.org/maven2/org/apache/flink/flink-sql-connector-hive-3.1.3_2.12/${FLINK_VERSION}/flink-sql-connector-hive-3.1.3_2.12-${FLINK_VERSION}.jar
+# NOTE: no Hive connector is published for Flink 2.x yet (latest: 1.20.5 / 3.0.0-1.20), so it is disabled
+#RUN mkdir -p /opt/flink/lib/hive && \
+#    wget -P /opt/flink/lib/hive https://repo1.maven.org/maven2/org/apache/flink/flink-sql-connector-hive-3.1.3_2.12/${FLINK_VERSION}/flink-sql-connector-hive-3.1.3_2.12-${FLINK_VERSION}.jar
+
+# Iceberg connector (runtime jar is built per Flink minor version)
+RUN wget -P /opt/flink/lib https://repo1.maven.org/maven2/org/apache/iceberg/iceberg-flink-runtime-2.3/1.12.0/iceberg-flink-runtime-2.3-1.12.0.jar
 
 # AWS connector dependencies
 RUN mkdir -p /opt/flink/lib/aws && \
