@@ -3,8 +3,7 @@ name: Build and Push Docker Image
 on:
   push:
     branches:
-      - main
-      - master
+      - flink-2.3-java17-scala2.12
     tags:
       - "v*"
   workflow_dispatch:
