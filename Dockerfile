@@ -68,7 +68,7 @@ RUN set -ex; \
   apt-get update && \
   apt-get install -y python3 python3-pip python3-dev && \
   rm -rf /var/lib/apt/lists/* && \
-  pip install apache-flink==${FLINK_VERSION};
+  pip install --break-system-packages apache-flink==${FLINK_VERSION};
   
 RUN echo "taskmanager.memory.jvm-metaspace.size: 512m" >> /opt/flink/conf/config.yaml;
 
