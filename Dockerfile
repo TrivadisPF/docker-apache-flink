@@ -6,6 +6,9 @@ FROM flink:${FLINK_TAG}
 ARG FLINK_VERSION
 ARG CONFLUENT_VERSION
 
+# The Flink 2.x base image runs as the non-root 'flink' user
+USER root
+
 # Install necessary utilities
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
@@ -67,7 +70,8 @@ RUN set -ex; \
   rm -rf /var/lib/apt/lists/* && \
   pip install apache-flink==${FLINK_VERSION};
   
-RUN echo "taskmanager.memory.jvm-metaspace.size: 512m" >> /opt/flink/conf/flink-conf.yaml;
+RUN echo "taskmanager.memory.jvm-metaspace.size: 512m" >> /opt/flink/conf/config.yaml;
 
 WORKDIR /opt/flink
 
+USER flink
